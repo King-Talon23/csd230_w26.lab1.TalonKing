@@ -1,89 +1,93 @@
 classDiagram
-    Editable <|--Product
-    Product <|--Ticket
-    Product <|--Publication
+%% Interface Implementations
+    Serializable <|.. ProductEntity
+    SaleableItem <|.. ProductEntity
+
+%% Inheritance Hierarchy
+    ProductEntity <|-- Ticket
+    ProductEntity <|-- Publication
     Publication <|-- Book
     Publication <|-- Magazine
     Magazine <|-- DiscMag
-    SaleableItem <|.. Product
-    Serializable <|.. Product
-    Product <-- CashTill
 
-    class Product{
-        -String productId
+%% Associations
+    ProductEntity "many" --* "many" CartEntity : products
+
+    class CartEntity {
+        -Long id
+        -Set~ProductEntity~ products
+        +void addProduct(ProductEntity product)
+        +Long getId()
+        +void setId(Long id)
+        +Set~ProductEntity~ getProducts()
+        +void setProducts(Set~ProductEntity~ products)
     }
 
-    class Serializable{
+    class ProductEntity {
+        <<abstract>>
+        -Long id
+        -Set~CartEntity~ carts
+        +Set~CartEntity~ getCarts()
+        +void setCarts(Set~CartEntity~ carts)
+        +Long getId()
+        +void setId(Long id)
+        +toString() String
+    }
+
+    class Serializable {
         <<interface>>
     }
-    class Ticket{
-        +description
-        +price
+
+    class Ticket {
+        +String description
+        +double price
         +sellItem()
     }
-    class Editable{
-        <<abstract>>
-        -Scanner input
-        +String getInput(String)
-        +int getInput(int)
-        +double getInput(double)
-        +boolean getInput(boolean)
-        +Date getInput(Date)
-        +Enum getInput(Enum)
-        +edit()*
-        +initialize()*
 
-    }
-    class Publication{
-        <<Abstract>>
+    class Publication {
+        <<abstract>>
         -String title
         -double price
         -int copies
-        +getPrice()
-
+        +getPrice() double
         +Publication()
         +Publication(String title, double price, int copies)
-        +toString()
-        +equals()
-        +hashCode()
-
+        +toString() String
+        +equals(Object obj) boolean
+        +hashCode() int
     }
-    class Book{
+
+    class Book {
         -String author
         +edit()
         +initialize()
         +sellItem()
-
         +Book()
         +Book(String author)
         +Book(String author, String title, double price, int copies)
-        +toString()
-        +equals()
-        +hashCode()
-
+        +toString() String
+        +equals(Object obj) boolean
+        +hashCode() int
     }
-    class Magazine{
-        -int orderQty
-        -java.util.Date currentIssue
 
+    class Magazine {
+        -int orderQty
+        -Date currentIssue
         +Magazine()
         +Magazine(int orderQty, Date currentIssue, String title, double price, int copies)
-
         +edit()
         +initialize()
         +sellItem()
     }
-    class DiscMag{
+    class DiscMag {
         -boolean hasDisc
         +edit()
         +initialize()
         +sellItem()
-
         +DiscMag()
-        +DiscMag(boolean, hasDisc, int orderQty, Date currentIssue, String title, double price, int copies)
-
+        +DiscMag(boolean hasDisc, int orderQty, Date currentIssue, String title, double price, int copies)
     }
-    class CashTill{
+    class CashTill {
         -double runningTotal
         +CashTill()
         +showTotal()
@@ -92,6 +96,5 @@ classDiagram
     class SaleableItem {
         <<interface>>
         +sellItem()
-        +getPrice()
-
+        +getPrice() double
     }

@@ -50,16 +50,6 @@ public class Book extends Publication {
     public String getAuthor() {
         return author;
     }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{author='" + author + "', " + super.toString() + "}";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,4 +63,14 @@ public class Book extends Publication {
     public int hashCode() {
         return Objects.hash(super.hashCode(), author);
     }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{author='" + author + "', " + super.toString() + "}";
+    }
+
+
 }
