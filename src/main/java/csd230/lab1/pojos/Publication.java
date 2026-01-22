@@ -1,10 +1,13 @@
 package csd230.lab1.pojos;
 
+import jakarta.persistence.Column;
+
 import java.util.Objects;
 
 public abstract class Publication extends Product {
     private String title = "";
-    private double price = 0.0;
+    @Column(nullable = false)
+    private Double price = 0.0;
     private int copies = 0;
 
     public Publication() {
@@ -44,7 +47,7 @@ public abstract class Publication extends Product {
     }
 
     @Override
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 

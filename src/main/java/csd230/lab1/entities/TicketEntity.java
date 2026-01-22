@@ -1,6 +1,5 @@
 package csd230.lab1.entities;
 
-import csd230.lab1.pojos.Magazine;
 import csd230.lab1.pojos.Ticket;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -10,26 +9,26 @@ import java.util.Objects;
 
 @Entity @DiscriminatorValue("TICKET")
 public class TicketEntity extends ProductEntity {
+    @Column(nullable = true)
     private String description;
-    @Column(name = "ticket_price") private double price;
     public TicketEntity() {}
-    public TicketEntity(String d, double p) { this.description = d; this.price = p; }
+    public TicketEntity(String d, Double p) {
+        super(p);
+    this.description = d;  }
 
-    @Override public void sellItem() { System.out.println("Selling Ticket: " + description + " for $" + price); }
-    @Override public double getPrice() { return price; }
+    @Override public void sellItem() { System.out.println("Selling Ticket: " + description + " for $" + this.getPrice()); }
 
     public String getDescription() { return description; }
     public void setDescription(String d) { this.description = d; }
-    public void setPrice(double p) { this.price = p; }
-    @Override public String toString() { return "Ticket{desc='" + description + "', price=" + price + "}"; }
+    @Override public String toString() { return "Ticket{desc='" + description + "', price=" + this.getPrice() + "}"; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Ticket)) return false;
+        if (!(o instanceof TicketEntity)) return false;
         if (!super.equals(o)) return false;
-        Ticket t = (Ticket) o;
-        return Objects.equals(price, t.getPrice());
+        TicketEntity t = (TicketEntity) o;
+        return Objects.equals(this.getPrice(), t.getPrice());
     }
 
     @Override

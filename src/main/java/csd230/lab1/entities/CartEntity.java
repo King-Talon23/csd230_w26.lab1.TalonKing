@@ -22,7 +22,7 @@ public class CartEntity {
     private Set<ProductEntity> products = new LinkedHashSet<>();
     public void addProduct(ProductEntity product) {
         this.products.add(product);
-        product.getCarts().add(this); // Maintain the link on both sides
+        product.getCarts().add(this);
     }
 
     public Long getId() { return id; }

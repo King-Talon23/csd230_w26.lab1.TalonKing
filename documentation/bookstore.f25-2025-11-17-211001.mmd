@@ -6,9 +6,14 @@ classDiagram
 %% Inheritance Hierarchy
     ProductEntity <|-- Ticket
     ProductEntity <|-- Publication
+    ProductEntity <|-- ClothingItem
+
     Publication <|-- Book
     Publication <|-- Magazine
     Magazine <|-- DiscMag
+
+    ClothingItem <|-- Jacket
+    ClothingItem <|-- TShirt
 
 %% Associations
     ProductEntity "many" --* "many" CartEntity : products
@@ -38,6 +43,12 @@ classDiagram
         <<interface>>
     }
 
+    class SaleableItem {
+        <<interface>>
+        +sellItem()
+        +getPrice() double
+    }
+
     class Ticket {
         +String description
         +double price
@@ -50,10 +61,8 @@ classDiagram
         -double price
         -int copies
         +getPrice() double
-        +Publication()
-        +Publication(String title, double price, int copies)
         +toString() String
-        +equals(Object obj) boolean
+        +equals(Object) boolean
         +hashCode() int
     }
 
@@ -62,39 +71,46 @@ classDiagram
         +edit()
         +initialize()
         +sellItem()
-        +Book()
-        +Book(String author)
-        +Book(String author, String title, double price, int copies)
-        +toString() String
-        +equals(Object obj) boolean
-        +hashCode() int
     }
 
     class Magazine {
         -int orderQty
         -Date currentIssue
-        +Magazine()
-        +Magazine(int orderQty, Date currentIssue, String title, double price, int copies)
         +edit()
         +initialize()
         +sellItem()
     }
+
     class DiscMag {
         -boolean hasDisc
         +edit()
         +initialize()
         +sellItem()
-        +DiscMag()
-        +DiscMag(boolean hasDisc, int orderQty, Date currentIssue, String title, double price, int copies)
     }
+
+%% ===== Clothing Niche =====
+
+    class ClothingItem {
+        <<abstract>>
+        -String size
+        -double price
+        -int copies
+        +getPrice() double
+        +sellItem()
+    }
+
+    class Jacket {
+        -boolean insulated
+        +sellItem()
+    }
+
+    class TShirt {
+        -String sleeveLength
+        +sellItem()
+    }
+
     class CashTill {
         -double runningTotal
-        +CashTill()
         +showTotal()
         +sellItem(SaleableItem item)
-    }
-    class SaleableItem {
-        <<interface>>
-        +sellItem()
-        +getPrice() double
     }

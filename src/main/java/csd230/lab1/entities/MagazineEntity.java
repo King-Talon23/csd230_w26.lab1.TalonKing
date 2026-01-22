@@ -1,15 +1,10 @@
 package csd230.lab1.entities;
 
-import csd230.lab1.pojos.DiscMag;
 import csd230.lab1.pojos.Magazine;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity @DiscriminatorValue("MAGAZINE")
@@ -20,7 +15,7 @@ public class MagazineEntity extends PublicationEntity {
     public MagazineEntity() {
     }
 
-    public MagazineEntity(String t, double p, int c, int o, LocalDateTime d) {
+    public MagazineEntity(String t, Double p, int c, int o, LocalDateTime d) {
         super(t, p, c);
         this.orderQty = o;
         this.currentIssue = d;
@@ -50,9 +45,9 @@ public class MagazineEntity extends PublicationEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Magazine)) return false;
+        if (!(o instanceof MagazineEntity)) return false;
         if (!super.equals(o)) return false;
-        Magazine mag = (Magazine) o;
+        MagazineEntity mag = (MagazineEntity) o;
         return Objects.equals(currentIssue, mag.getCurrentIssue());
     }
 
