@@ -1,9 +1,7 @@
 classDiagram
-%% Interface Implementations
     Serializable <|.. ProductEntity
     SaleableItem <|.. ProductEntity
 
-%% Inheritance Hierarchy
     ProductEntity <|-- Ticket
     ProductEntity <|-- Publication
     ProductEntity <|-- ClothingItem
@@ -15,8 +13,8 @@ classDiagram
     ClothingItem <|-- Jacket
     ClothingItem <|-- TShirt
 
-%% Associations
-    ProductEntity "many" --* "many" CartEntity : products
+    ProductEntity "many" --* "many" CartEntity : cart_products
+    ProductEntity "many" --* "many" OrderEntity : order_products
 
     class CartEntity {
         -Long id
@@ -28,14 +26,29 @@ classDiagram
         +void setProducts(Set~ProductEntity~ products)
     }
 
+    class OrderEntity {
+        -Long id
+        -double totalAmount
+        -LocalDateTime orderDate
+        -Set~ProductEntity~ products
+        +Long getId()
+        +double getTotalAmount()
+        +void setTotalAmount(double)
+        +LocalDateTime getOrderDate()
+        +void setOrderDate(LocalDateTime)
+        +Set~ProductEntity~ getProducts()
+        +void setProducts(Set~ProductEntity~)
+    }
+
     class ProductEntity {
         <<abstract>>
         -Long id
         -Set~CartEntity~ carts
         +Set~CartEntity~ getCarts()
-        +void setCarts(Set~CartEntity~ carts)
+        +void setCarts(Set~CartEntity~)
         +Long getId()
         +void setId(Long id)
+        +String getProductType()
         +toString() String
     }
 
@@ -87,8 +100,6 @@ classDiagram
         +initialize()
         +sellItem()
     }
-
-%% ===== Clothing Niche =====
 
     class ClothingItem {
         <<abstract>>

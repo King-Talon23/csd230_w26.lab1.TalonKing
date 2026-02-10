@@ -7,11 +7,11 @@
 
 <h1>Your Shopping Cart</h1>
 
-<div th:if="${cart.products.empty}">
+<div th:if="${cart.products==empty}">
     <p>Your cart is empty.</p>
 </div>
 
-<table border="1" th:unless="${cart.products.empty}">
+<table border="1" th:unless="${cart.products==empty}">
     <thead>
     <tr>
         <th>Item Name / Description</th>
@@ -46,6 +46,8 @@
 
 <br>
 <a th:href="@{/books}">Continue Shopping</a>
-
+<form th:action="@{/cart/checkout}" method="post">
+    <button type="submit">Checkout</button>
+</form>
 </body>
 </html>
