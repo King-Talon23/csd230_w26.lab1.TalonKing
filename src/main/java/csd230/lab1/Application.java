@@ -8,10 +8,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -24,6 +24,8 @@ public class Application implements CommandLineRunner {
 	private final DiscMagRepository discMagRepository;
 	private final JacketRepository jacketRepository;
 	private final TShirtRepository tShirtRepository;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	public Application(
 			ProductRepository productRepository,
@@ -33,7 +35,9 @@ public class Application implements CommandLineRunner {
 			TicketRepository ticketRepository,
 			DiscMagRepository discMagRepository,
 			JacketRepository jacketRepository,
-			TShirtRepository tShirtRepository
+			TShirtRepository tShirtRepository,
+			UserRepository userRepository,
+			PasswordEncoder passwordEncoder
 	) {
 		this.productRepository = productRepository;
 		this.cartRepository = cartRepository;
@@ -43,6 +47,8 @@ public class Application implements CommandLineRunner {
 		this.discMagRepository = discMagRepository;
 		this.jacketRepository = jacketRepository;
 		this.tShirtRepository = tShirtRepository;
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public static void main(String[] args) {
@@ -52,6 +58,20 @@ public class Application implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) {
+
+		if (userRepository.count() == 0) {
+			userRepository.save(new UserEntity(
+					"admin",
+					passwordEncoder.encode("admin123"),
+					"ADMIN"
+			));
+
+			userRepository.save(new UserEntity(
+					"user",
+					passwordEncoder.encode("user123"),
+					"USER"
+			));
+		}
 
 		Faker faker = new Faker();
 		Commerce commerce = faker.commerce();
@@ -95,12 +115,12 @@ public class Application implements CommandLineRunner {
 		discMagRepository.save(discMag);
 		System.out.println("Saved DiscMag: " + discMag);
 
-
 		JacketEntity jacket = new JacketEntity(
 				"L",
 				89.99,
 				5,
-				true		);
+				true
+		);
 		jacketRepository.save(jacket);
 
 		TShirtEntity tShirt = new TShirtEntity(
@@ -131,7 +151,6 @@ public class Application implements CommandLineRunner {
 				System.out.println("  -> " + p);
 			}
 		}
-
 
 		book.setPrice(book.getPrice() + 5.00);
 		bookRepository.save(book);
