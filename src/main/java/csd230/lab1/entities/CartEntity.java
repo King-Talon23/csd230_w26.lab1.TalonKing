@@ -11,6 +11,10 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
     // LinkedHashSet for NO duplicate items
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -29,5 +33,7 @@ public class CartEntity {
     public void setId(Long id) { this.id = id; }
     public Set<ProductEntity> getProducts() { return products; }
     public void setProducts(Set<ProductEntity> products) { this.products = products; }
+    public UserEntity getUser() { return user; }
+    public void setUser(UserEntity user) { this.user = user; }
 }
 
