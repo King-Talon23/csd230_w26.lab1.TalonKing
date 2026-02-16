@@ -137,13 +137,13 @@ public class Application implements CommandLineRunner {
 		cart.addProduct(book);
 		cartRepository.save(cart);
 
-		System.out.println("LISTING ALL PRODUCTS");
+		System.out.println("LISTING  PRODUCTS");
 		List<ProductEntity> allProducts = productRepository.findAll();
 		for (ProductEntity p : allProducts) {
 			System.out.println(p);
 		}
 
-		System.out.println("\nSHOWING ALL CARTS");
+		System.out.println("\nSHOWING  CARTS");
 		List<CartEntity> allCarts = cartRepository.findAll();
 		for (CartEntity c : allCarts) {
 			System.out.println(c);
@@ -155,7 +155,10 @@ public class Application implements CommandLineRunner {
 		book.setPrice(book.getPrice() + 5.00);
 		bookRepository.save(book);
 
-		System.out.println("\nSHOWIGN UPDATES/DELETE");
+		System.out.println("\nSHOWING UPDATES");
 		productRepository.findAll().forEach(System.out::println);
+
+		System.out.println("\nCart Entity Table");
+		cartRepository.findAll().forEach(System.out::println);
 	}
 }

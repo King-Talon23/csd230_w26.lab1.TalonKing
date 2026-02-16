@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Shopping Cart</title>
 </head>
@@ -9,6 +10,14 @@
 
 <div th:if="${cart.products==empty}">
     <p>Your cart is empty.</p>
+</div>
+
+<div style="float:right">
+    Logged in as: <span sec:authentication="name">User</span>
+
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+        <input type="submit" value="Sign Out"/>
+    </form>
 </div>
 
 <table border="1" th:unless="${cart.products==empty}">
