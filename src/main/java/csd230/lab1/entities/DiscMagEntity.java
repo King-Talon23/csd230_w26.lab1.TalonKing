@@ -13,23 +13,22 @@ import java.util.Objects;
 @DiscriminatorValue("DISCMAG")
 public class DiscMagEntity extends MagazineEntity {
 
-
     @Column(nullable = true)
-    private boolean hasDisc;
+    private Boolean hasDisc; // boolean → Boolean
 
     public DiscMagEntity() {
     }
 
-    public DiscMagEntity(String t, Double p, int c, int o, LocalDateTime d, boolean h) {
+    public DiscMagEntity(String t, Double p, Integer c, Integer o, LocalDateTime d, Boolean h) {
         super(t, p, c, o, d);
         this.hasDisc = h;
     }
 
-    public boolean isHasDisc() {
+    public Boolean isHasDisc() {
         return hasDisc;
     }
 
-    public void setHasDisc(boolean h) {
+    public void setHasDisc(Boolean h) {
         this.hasDisc = h;
     }
 

@@ -5,9 +5,9 @@ import jakarta.persistence.Entity;
 @Entity
 public abstract class PublicationEntity extends ProductEntity {
     private String title;
-    private int copies;
+    private Integer copies; // int → Integer
     public PublicationEntity() {}
-    public PublicationEntity(String t, Double p, int c) {
+    public PublicationEntity(String t, Double p, Integer c) {
         super(p);
         this.title = t;
         this.copies = c; }
@@ -18,7 +18,7 @@ public abstract class PublicationEntity extends ProductEntity {
     }
     public String getTitle() { return title; }
     public void setTitle(String t) { this.title = t; }
-    public int getCopies() { return copies; }
-    public void setCopies(int c) { this.copies = c; }
+    public Integer getCopies() { return copies; }
+    public void setCopies(Integer c) { this.copies = c; }
     @Override public String toString() { return "Pub{title='" + title + "', price=" + this.getPrice() + ", copies=" + copies + "}"; }
 }

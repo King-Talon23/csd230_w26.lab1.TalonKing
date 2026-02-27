@@ -13,7 +13,7 @@ public class TShirtEntity extends ClothingItemEntity {
 
     public TShirtEntity() {}
 
-    public TShirtEntity(String size, Double price, int copies, String sleeveLength) {
+    public TShirtEntity(String size, Double price, Integer copies, String sleeveLength) {
         super(size, price, copies);
         this.sleeveLength = sleeveLength;
     }

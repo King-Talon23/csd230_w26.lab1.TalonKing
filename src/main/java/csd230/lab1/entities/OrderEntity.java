@@ -13,7 +13,7 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double totalAmount;
+    private Double totalAmount; // double → Double
 
     private LocalDateTime orderDate;
 
@@ -27,8 +27,8 @@ public class OrderEntity {
 
     public Long getId() { return id; }
 
-    public double getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
+    public Double getTotalAmount() { return totalAmount; }
+    public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
 
     public LocalDateTime getOrderDate() { return orderDate; }
     public void setOrderDate(LocalDateTime orderDate) { this.orderDate = orderDate; }

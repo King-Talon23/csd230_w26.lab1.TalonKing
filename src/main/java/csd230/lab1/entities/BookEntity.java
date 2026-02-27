@@ -8,9 +8,8 @@ import java.util.Objects;
 @Entity @DiscriminatorValue("BOOK")
 public class BookEntity extends PublicationEntity {
     private String author;
-    private String isbn;
     public BookEntity() {}
-    public BookEntity(String t, Double p, int c, String a) {
+    public BookEntity(String t, Double p, Integer c, String a) {
         super(t, p, c);
         this.author = a;
     }

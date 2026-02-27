@@ -3,12 +3,12 @@ package csd230.lab1.pojos;
 import java.util.Date;
 
 public class DiscMag extends Magazine {
-    private boolean hasDisc;
+    private Boolean hasDisc;
 
     public DiscMag() {
     }
 
-    public DiscMag(boolean hasDisc, int orderQty, Date currentIssue, String title, double price, int copies) {
+    public DiscMag(Boolean hasDisc, Integer orderQty, Date currentIssue, String title, Double price, Integer copies) {
         super(orderQty, currentIssue, title, price, copies);
         this.hasDisc = hasDisc;
     }
@@ -35,8 +35,8 @@ public class DiscMag extends Magazine {
         setCopies(getCopies() - 1);
     }
 
-    public boolean isHasDisc() { return hasDisc; }
-    public void setHasDisc(boolean h) { this.hasDisc = h; }
+    public Boolean isHasDisc() { return hasDisc; }
+    public void setHasDisc(Boolean h) { this.hasDisc = h; }
 
     @Override
     public String toString() {

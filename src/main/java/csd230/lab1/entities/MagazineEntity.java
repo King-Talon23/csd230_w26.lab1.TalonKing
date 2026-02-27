@@ -9,23 +9,23 @@ import java.util.Objects;
 
 @Entity @DiscriminatorValue("MAGAZINE")
 public class MagazineEntity extends PublicationEntity {
-    private int orderQty;
+    private Integer orderQty; // int → Integer
     private LocalDateTime currentIssue;
 
     public MagazineEntity() {
     }
 
-    public MagazineEntity(String t, Double p, int c, int o, LocalDateTime d) {
+    public MagazineEntity(String t, Double p, Integer c, Integer o, LocalDateTime d) {
         super(t, p, c);
         this.orderQty = o;
         this.currentIssue = d;
     }
 
-    public int getOrderQty() {
+    public Integer getOrderQty() {
         return orderQty;
     }
 
-    public void setOrderQty(int o) {
+    public void setOrderQty(Integer o) {
         this.orderQty = o;
     }
 

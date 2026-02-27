@@ -3,13 +3,13 @@ package csd230.lab1.pojos;
 public abstract class ClothingItem extends Product {
 
     protected String size;
-    protected double price;
-    protected int copies;
+    protected Double price;
+    protected Integer copies;
 
     public ClothingItem() {
     }
 
-    public ClothingItem(String productId, String size, double price, int copies) {
+    public ClothingItem(String productId, String size, Double price, Integer copies) {
         setProductId(productId);
         this.size = size;
         this.price = price;
@@ -56,11 +56,11 @@ public abstract class ClothingItem extends Product {
         return size;
     }
 
-    public int getCopies() {
+    public Integer getCopies() {
         return copies;
     }
 
-    public void setCopies(int copies) {
+    public void setCopies(Integer copies) {
         this.copies = copies;
     }
 

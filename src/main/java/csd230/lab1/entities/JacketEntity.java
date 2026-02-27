@@ -9,20 +9,20 @@ import jakarta.persistence.Entity;
 public class JacketEntity extends ClothingItemEntity {
 
     @Column(nullable = true)
-    private boolean insulated;
+    private Boolean insulated; // boolean → Boolean
 
     public JacketEntity() {}
 
-    public JacketEntity(String size, Double price, int copies, boolean insulated) {
+    public JacketEntity(String size, Double price, Integer copies, Boolean insulated) {
         super(size, price, copies);
         this.insulated = insulated;
     }
 
-    public boolean isInsulated() {
+    public Boolean isInsulated() {
         return insulated;
     }
 
-    public void setInsulated(boolean insulated) {
+    public void setInsulated(Boolean insulated) {
         this.insulated = insulated;
     }
 

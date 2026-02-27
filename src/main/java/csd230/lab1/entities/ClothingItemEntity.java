@@ -11,11 +11,11 @@ public abstract class ClothingItemEntity extends ProductEntity {
     protected String size;
 
     @Column(nullable = false)
-    protected int copies;
+    protected Integer copies; // int → Integer
 
     public ClothingItemEntity() {}
 
-    public ClothingItemEntity(String size, Double price, int copies) {
+    public ClothingItemEntity(String size, Double price, Integer copies) {
         super(price);
         this.size = size;
         this.copies = copies;
@@ -37,11 +37,11 @@ public abstract class ClothingItemEntity extends ProductEntity {
         this.size = size;
     }
 
-    public int getCopies() {
+    public Integer getCopies() {
         return copies;
     }
 
-    public void setCopies(int copies) {
+    public void setCopies(Integer copies) {
         this.copies = copies;
     }
 
