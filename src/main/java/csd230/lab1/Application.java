@@ -1,6 +1,5 @@
 package csd230.lab1;
 
-import com.github.javafaker.Commerce;
 import com.github.javafaker.Faker;
 import csd230.lab1.entities.*;
 import csd230.lab1.repositories.*;
@@ -8,45 +7,21 @@ import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
-
 	private final ProductRepository productRepository;
-	private final CartRepository cartRepository;
-	private final BookRepository bookRepository;
-	private final MagazineRepository magazineRepository;
-	private final TicketRepository ticketRepository;
-	private final DiscMagRepository discMagRepository;
-	private final JacketRepository jacketRepository;
-	private final TShirtRepository tShirtRepository;
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public Application(
-			ProductRepository productRepository,
-			CartRepository cartRepository,
-			BookRepository bookRepository,
-			MagazineRepository magazineRepository,
-			TicketRepository ticketRepository,
-			DiscMagRepository discMagRepository,
-			JacketRepository jacketRepository,
-			TShirtRepository tShirtRepository,
-			UserRepository userRepository,
-			PasswordEncoder passwordEncoder
-	) {
+	public Application(ProductRepository productRepository,
+					   UserRepository userRepository,
+					   PasswordEncoder passwordEncoder) {
 		this.productRepository = productRepository;
-		this.cartRepository = cartRepository;
-		this.bookRepository = bookRepository;
-		this.magazineRepository = magazineRepository;
-		this.ticketRepository = ticketRepository;
-		this.discMagRepository = discMagRepository;
-		this.jacketRepository = jacketRepository;
-		this.tShirtRepository = tShirtRepository;
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -58,107 +33,28 @@ public class Application implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) {
-
-		if (userRepository.count() == 0) {
-			userRepository.save(new UserEntity(
-					"admin",
-					passwordEncoder.encode("admin123"),
-					"ADMIN"
-			));
-
-			userRepository.save(new UserEntity(
-					"user",
-					passwordEncoder.encode("user123"),
-					"USER"
-			));
-		}
-
 		Faker faker = new Faker();
-		Commerce commerce = faker.commerce();
-
-		BookEntity book = new BookEntity(
-				faker.book().title(),
-				4.61,
-				10,
-				faker.book().author(),
-				"1234-5678-9012-3456"
-		);
-		book.setPrice(1.82);
-		bookRepository.save(book);
-
-		MagazineEntity magazine = new MagazineEntity(
-				faker.lorem().word() + " Magazine",
-				12.99,
-				20,
-				50,
-				LocalDateTime.now()
-		);
-		magazineRepository.save(magazine);
-
-		TicketEntity ticket = new TicketEntity(
-				faker.company().name() + " Event",
-				5.34
-		);
-
-		ticketRepository.save(ticket);
-		System.out.println("Saved Ticket: " + ticket);
-
-		DiscMagEntity discMag = new DiscMagEntity(
-				faker.music().genre() + " Monthly",
-				8.92,
-				50,
-				faker.number().numberBetween(1, 12),
-				LocalDateTime.now(),
-				true
-		);
-
-		discMagRepository.save(discMag);
-		System.out.println("Saved DiscMag: " + discMag);
-
-		JacketEntity jacket = new JacketEntity(
-				"L",
-				89.99,
-				5,
-				true
-		);
-		jacketRepository.save(jacket);
-
-		TShirtEntity tShirt = new TShirtEntity(
-				"M",
-				24.99,
-				15,
-				"Short Sleeve"
-		);
-		tShirtRepository.save(tShirt);
-
-		CartEntity cart = new CartEntity();
-		cartRepository.save(cart);
-
-		cart.addProduct(book);
-		cartRepository.save(cart);
-
-		System.out.println("LISTING  PRODUCTS");
-		List<ProductEntity> allProducts = productRepository.findAll();
-		for (ProductEntity p : allProducts) {
-			System.out.println(p);
+		for (int i = 0; i < 10; i++) {
+			productRepository.save(new BookEntity(
+					faker.book().title(),
+					Double.parseDouble(faker.commerce().price()),
+					10,
+					faker.book().author()
+			));
 		}
 
-		System.out.println("\nSHOWING  CARTS");
-		List<CartEntity> allCarts = cartRepository.findAll();
-		for (CartEntity c : allCarts) {
-			System.out.println(c);
-			for (ProductEntity p : c.getProducts()) {
-				System.out.println("  -> " + p);
+		userRepository.save(new UserEntity("admin", passwordEncoder.encode("admin"), "ADMIN"));
+		userRepository.save(new UserEntity("user", passwordEncoder.encode("user"), "USER"));
+		System.out.println("REST API Lab Ready: admin/admin and user/user created.");
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE");
 			}
-		}
-
-		book.setPrice(book.getPrice() + 5.00);
-		bookRepository.save(book);
-
-		System.out.println("\nSHOWING UPDATES");
-		productRepository.findAll().forEach(System.out::println);
-
-		System.out.println("\nCart Entity Table");
-		cartRepository.findAll().forEach(System.out::println);
+		};
 	}
 }
