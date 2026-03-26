@@ -1,5 +1,6 @@
 package csd230.lab1.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import csd230.lab1.pojos.Book;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import java.util.Objects;
 public class BookEntity extends PublicationEntity {
     private String author;
     public BookEntity() {}
+    @JsonIgnore
     public BookEntity(String t, Double p, Integer c, String a) {
         super(t, p, c);
         this.author = a;
